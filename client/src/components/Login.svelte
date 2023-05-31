@@ -5,6 +5,8 @@
 
   let email = '';
   let password = '';
+  let message = '';
+  let status = undefined;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,7 +23,7 @@
         navigate("/home")
       }
     } catch (error) {
-      console.log("error");
+      message = error.response.data.message
       console.log(error);
     }
   };
@@ -38,6 +40,7 @@
 </script>
 
 <div class="">
+  <p id="message" style="{status === true ? "color: green": "color: red"}">{message}</p>
     <form on:submit={handleSubmit} class="container" method="POST">
       <h1>Login</h1>
       <p>
@@ -79,6 +82,14 @@
   left: 40%;
   top: 20%;
 }
+
+#message{
+  left: 40%;
+  top: 16%;
+  position: absolute;
+  font-size: 1.5em;
+}
+
 
 input {
   width: 170%;

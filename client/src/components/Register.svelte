@@ -87,7 +87,7 @@
 }
 
 #message{
-  left: 38%;
+  left: 40%;
   top: 16%;
   position: absolute;
   font-size: 1.5em;

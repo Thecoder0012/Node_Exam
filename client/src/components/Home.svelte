@@ -8,21 +8,19 @@
 
 
   let user = "";
-  const authenticated = (response) => {
-    if (response.data.authenticated) {
-      user = response.data.user.email;
-      console.log("user");
-    } else {
-      navigate('/'); 
-    }
+  function authenticated(response)  {
+    return response.data.authenticated ? 
+    user = response.data.user.email 
+    : navigate("/");
   };
   
 
     onMount(async () => {
     try {
-      const response = await axios.get(`${$BASE_URL}/login`, { withCredentials: true });
+      const response = await axios.get($BASE_URL+"/login", { withCredentials: true });
       const auth = authenticated(response);
     } catch (error) {
+      console.log(error);
     }
   });
 
