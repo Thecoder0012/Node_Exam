@@ -41,13 +41,11 @@ router.get("/login", (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log(email,password);
     const [users] = await db.query(
       "SELECT * from users where email = ?;",
       email
     );
     const user = users[0];
-    console.log(user);
     if (!!user) {
       const comparePasswords = await bcrypt.compare(
         password.toString(),

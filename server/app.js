@@ -13,6 +13,25 @@ app.use(
     origin: true,
   })
 );
+
+import http from "http";
+const server = http.createServer(app);
+
+import { Server } from "socket.io";
+const io = new Server(server, {
+    cors: {
+        origin: "*",
+        methods: ["*"]
+    }
+});
+
+io.on("connection", (socket) => {
+  socket.on("mymessage",(data) => {
+    socket.broadcast.emit("message_receiver",data)
+  })
+});
+
+
 app.use(cookieParser());
 
 app.use(
@@ -20,7 +39,7 @@ app.use(
     key: process.env.SESSION_KEY,
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
     cookie: {
       secure: false,
       maxAge: 60 * 1000 * 15,
@@ -33,4 +52,4 @@ import authRouter from "./routes/authRouter.js";
 app.use(authRouter);
 
 const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => console.log("Server is running on", PORT));
+server.listen(PORT, () => console.log("Server is running on", PORT));
