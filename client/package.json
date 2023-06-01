@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "axios": "^1.4.0",
+    "socket.io-client": "^4.6.2",
     "svelte-navigator": "^3.2.2",
     "svelte-routing": "^1.8.9",
     "toastr": "^2.1.4"

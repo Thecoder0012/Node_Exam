@@ -1,5 +1,4 @@
 <script>
-import {Link} from "svelte-navigator";
 import axios from "axios";
 import {BASE_URL} from '../store/globalStore.js';
 
@@ -13,14 +12,13 @@ async function logout(){
 
 <div class="container">
     <ul>
-      <li> <Link classname="link" to="/homepage">Home</Link> </li>
-      <li> <Link classname="link" to="/contact">Contact</Link> </li>
-      <li> <Link classname="link" on:click={logout} to="/">Logout</Link> </li>
+      <li> <a classname="link" href="/homepage">Home</a> </li>
+      <li> <a classname="link" href="/contact">Contact</a> </li>
+      <li> <a classname="link" on:click={logout} href="/">Logout</a> </li>
     </ul>
   </div>
 
 <style>
-
 *{
     margin: 0;
     padding: 0;
@@ -32,11 +30,11 @@ async function logout(){
  li{
     list-style: none;
     display: inline;
-    padding: 50px;
+    padding: 48px;
  }
+
  
- 
- .link{
+ a{
     text-decoration: none;
     color: white;
     border-radius: 10px;
@@ -58,8 +56,4 @@ async function logout(){
    background-color: black;
    width: 100%;
  }
-
-
-
-
 </style>
