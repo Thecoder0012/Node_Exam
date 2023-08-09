@@ -12,7 +12,7 @@ async function logout(){
 
 <div class="container">
     <ul>
-      <li> <a classname="link" href="/homepage">Home</a> </li>
+      <li> <a classname="link" href="/home">Home</a> </li>
       <li> <a classname="link" href="/contact">Contact</a> </li>
       <li> <a classname="link" on:click={logout} href="/">Logout</a> </li>
     </ul>

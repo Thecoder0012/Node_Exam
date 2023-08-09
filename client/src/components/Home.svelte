@@ -19,23 +19,25 @@
   let incomingMessage = "";
 
   function authenticated(response)  {
-    return response.data.authenticated ? 
-    user = response.data.user.email 
-    : navigate("/home");
+    return response.data.authenticated ? user = response.data.user.email : navigate("/home");
   };
 
 
   function handleInputChange(event){
       message = event.currentTarget.value
   }
+
+
  
     onMount(async () => {
     try {
       socket.on("message_receiver",(data) => {
         incomingMessage = data.message
       })
-      const response = await axios.get($BASE_URL+"/login", { withCredentials: true });
-      const auth = authenticated(response);
+      const response = await axios.get("http://localhost:8080/login", { 
+        withCredentials: true,
+      });
+      const auth = authenticated(response)
     } catch (error) {
       console.error(error);
     }
@@ -45,7 +47,7 @@
 
 <Navbar/>
 <div class="authenticated">
-    <h1>Welcome {user}</h1>
+    <h1>Welcome {user} to this application</h1>
 
     <input name="mess" placeholder="Type in your message" on:input={handleInputChange}>
     <button on:click={messageSender}>Send message</button>

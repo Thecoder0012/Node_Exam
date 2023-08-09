@@ -67,6 +67,44 @@ router.post("/login", async (req, res) => {
   }
 });
 
+router.post("/contact",(req,res) => {
+  const { name,email,message } = req.body;
+
+  const mailInfo = transporter.sendMail({
+    from: email,
+    to: process.env.NODEMAILER_USER,
+    subject: name,
+    text: message,
+  }, (error, info) => {
+    if (error) {
+      console.error(error);
+    } else {
+      res.status(200).send({ message: "You have successfully sent a message!"});
+    }
+  });
+
+  setTimeout(() => {
+    const reply = transporter.sendMail({
+      from: process.env.NODEMAILER_USER,
+      to: email,
+      subject: name,
+      text: "Thanks for sending a message. We will respond look at your message asap!",
+    }, (error, info) => {
+      if (error) {
+        console.error(error);
+      } else {
+        res.status(200).send({ message: "You have successfully sent a message!"});
+      }
+    });
+  },5000)
+
+  res.status(200).send("")
+
+})
+
+
+
+
 router.get("/destroy", (req, res) => {
   req.session.destroy();
   res.status(200).send({ message: "Session user_id deleted" });

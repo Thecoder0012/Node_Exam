@@ -53,6 +53,7 @@
         placeholder="Email"
         bind:value={email}
         on:input={handleInputChange}
+        autofocus
         required
       />
     </p>
@@ -127,6 +128,6 @@ input[placeholder] {
   .register {
     position: absolute;
     left: 44%;
-    top: 47%;
+    top: 55%;
   }
 </style>
