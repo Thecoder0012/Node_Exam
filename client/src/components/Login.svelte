@@ -124,7 +124,7 @@ input[placeholder] {
 
 .signUpButton {
     position: absolute;
-    left: 44%;
+    left: 43%;
     top: 55%;
 }
 

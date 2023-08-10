@@ -3,6 +3,7 @@
   import axios from 'axios';
   import {BASE_URL} from '../store/globalStore.js';
   
+  let username = '';
   let email = '';
   let password = '';
   let message = '';
@@ -13,6 +14,7 @@
 
     try {
       const response = await axios.post($BASE_URL+'/signup', {
+        username,
         email,
         password,
       });
@@ -28,7 +30,10 @@
   };
 
   const handleInputChange = (event) => {
-    if (event.target.name === 'email') {
+    if (event.target.name === 'username') {
+      username = event.target.value;
+    }
+      else if (event.target.name === 'email') {
       email = event.target.value;
     } else if (event.target.name === 'password') {
       password = event.target.value;
@@ -45,6 +50,18 @@
 </div>
   <form on:submit={handleSubmit} class="container" method="POST">
     <h1>Sign up</h1>
+     <p>
+      <input
+        id="username"
+        type="text"
+        name="username"
+        placeholder="Username"
+        bind:value={username}
+        on:input={handleInputChange}
+        autofocus
+        required/>
+    </p>
+
     <p>
       <input
         id="Email"
@@ -53,7 +70,6 @@
         placeholder="Email"
         bind:value={email}
         on:input={handleInputChange}
-        autofocus
         required
       />
     </p>
@@ -68,7 +84,7 @@
         required
       />
     </p>
-    <input type="submit" id="submit" value="Sign up" />
+    <input type="submit" id="submit" value="Register" />
   </form>
 
   <div class="register">
@@ -127,7 +143,7 @@ input[placeholder] {
 
   .register {
     position: absolute;
-    left: 44%;
-    top: 55%;
+    left: 43%;
+    top: 64%;
   }
 </style>

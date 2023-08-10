@@ -6,6 +6,8 @@
   import { onMount } from 'svelte';
   import Navbar from './Navbar.svelte';
   import io from 'socket.io-client';
+  import Video from "../video/video.mp4";
+
 
   let socket = io($BASE_URL);
 
@@ -19,14 +21,13 @@
   let incomingMessage = "";
 
   function authenticated(response)  {
-    return response.data.authenticated ? user = response.data.user.email : navigate("/home");
+    return response.data.authenticated ? user = response.data.user.email : navigate("/");
   };
 
 
   function handleInputChange(event){
       message = event.currentTarget.value
   }
-
 
  
     onMount(async () => {
@@ -46,18 +47,21 @@
 </script>
 
 <Navbar/>
-<div class="authenticated">
-    <h1>Welcome {user} to this application</h1>
 
-    <input name="mess" placeholder="Type in your message" on:input={handleInputChange}>
-    <button on:click={messageSender}>Send message</button>
-    <h2> Message </h2>
-    {incomingMessage}
+<div class='video-container'>
+  <div class="overlay"></div>
+      <video class="video" src={Video} autoPlay controls loop muted />
+          <div class="content">
+              <h1>Velcome to the restaurant</h1>
+          </div>
 </div>
 
 
 
+
 <style>
+
+  
 .authenticated {
   position: absolute;
   left: 30%;
@@ -82,4 +86,38 @@
     border-radius: 5px;
     cursor: pointer;
   }
+
+.video-container {
+  width: 100%;
+  height: 100vh;
+}
+
+.video {
+  pointer-events:none;        
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.content {
+  position: absolute;
+  left: 38%;
+  top: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+
+ /* .video{
+  position: absolute;
+  pointer-events: all;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.278);
+}  */
 </style>
