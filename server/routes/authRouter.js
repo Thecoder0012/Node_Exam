@@ -7,12 +7,12 @@ import transporter from "../mail/config.js";
 const router = Router();
 
 router.post("/signup", async (req, res) => {
-  const { email, password } = req.body;
+  const { username, email, password } = req.body;
   try {
     const hashedPass = await bcrypt.hash(password.toString(), 12);
     const register = await db.query(
-      "INSERT INTO users (email,password) VALUES (?,?)",
-      [email, hashedPass]
+      "INSERT INTO users (username, email,password) VALUES (?,?,?)",
+      [username, email, hashedPass]
     );
 
     const mailInfo = transporter.sendMail({
@@ -31,6 +31,11 @@ router.post("/signup", async (req, res) => {
   } catch (error) {
        res.status(400).send({message: "This email has already been taken."});
   }
+});
+
+router.use((req, res, next) => {
+  console.log('Session:', req.session);
+  next();
 });
 
 router.get("/login", (req, res) => {
@@ -83,6 +88,7 @@ router.post("/contact",(req,res) => {
     }
   });
 
+
   setTimeout(() => {
     const reply = transporter.sendMail({
       from: process.env.NODEMAILER_USER,
@@ -98,8 +104,7 @@ router.post("/contact",(req,res) => {
     });
   },5000)
 
-  res.status(200).send("")
-
+  res.status(200).send({message: "Message sent again!"})
 })
 
 
