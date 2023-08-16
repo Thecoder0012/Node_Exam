@@ -13,25 +13,27 @@ const db = mysql.createPool({
 async function createTable() {
   const connection = await db.getConnection();
   try {
-    await connection.query(`DROP TABLE IF EXISTS users`);
-    await connection.query(`DROP TABLE IF EXISTS food`);
-    
+    // await connection.query(`DROP TABLE IF EXISTS users`);
+    // await connection.query(`DROP TABLE IF EXISTS products`);
     
     await connection.query(`
     CREATE TABLE IF NOT EXISTS users (
       id INT AUTO_INCREMENT PRIMARY KEY,
-      username VARCHAR(255) NOT NULL,
-      email VARCHAR(255) NOT NULL,
-      password VARCHAR(255) NOT NULL
+      username VARCHAR(255) NOT NULL UNIQUE,
+      email VARCHAR(255) NOT NULL UNIQUE,
+      password VARCHAR(255) NOT NULL,
+      role BOOLEAN NOT NULL DEFAULT FALSE
       )
   `);
 
     await connection.query(`
-      CREATE TABLE IF NOT EXISTS food (
+      CREATE TABLE IF NOT EXISTS products (
         id INTEGER AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
         price INTEGER,
-        weight DOUBLE
+        weight DOUBLE,
+        supplier VARCHAR(255) NOT NULL,
+        discount Double
       )
     `);
   } catch (error) {

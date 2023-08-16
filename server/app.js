@@ -1,20 +1,19 @@
 import express from "express";
 import "dotenv/config";
 import cors from "cors";
-import cookieParser from "cookie-parser";
 import session from "express-session";
 
 const app = express();
 
 app.use(express.json());
+
 app.use(
   cors({
-    credentials: true,
     origin: true,
+    credentials: true
   })
 );
 
-app.use(cookieParser());
 app.use(
   session({
     key: process.env.SESSION_KEY,
@@ -23,7 +22,7 @@ app.use(
     saveUninitialized: false,
     cookie: {
       secure: false,
-      maxAge: 60 * 1000 * 30,
+      maxAge: 30 * 60 * 1000,
       httpOnly: true
     },
   })
@@ -31,6 +30,9 @@ app.use(
 
 import authRouter from "./routes/authRouter.js";
 app.use(authRouter);
+
+import productRouter from "./routes/productRouter.js";
+app.use(productRouter);
 
 
 
