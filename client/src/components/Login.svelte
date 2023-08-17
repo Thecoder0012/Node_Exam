@@ -51,7 +51,6 @@
           placeholder="Email"
           value={email}
           on:input={handleInputChange}
-          autofocus
           required
         />
       </p>
@@ -124,7 +123,7 @@ input[placeholder] {
 
 .signUpButton {
     position: absolute;
-    left: 43%;
+    left: 45%;
     top: 55%;
 }
 

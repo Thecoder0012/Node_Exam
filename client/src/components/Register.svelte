@@ -7,6 +7,7 @@
   let email = '';
   let password = '';
   let message = '';
+  let role = ''
   let status = undefined;
 
   const handleSubmit = async (e) => {
@@ -17,6 +18,7 @@
         username,
         email,
         password,
+        role
       });
       if (response.status === 200) {
         message = response.data.message;
@@ -58,7 +60,6 @@
         placeholder="Username"
         bind:value={username}
         on:input={handleInputChange}
-        autofocus
         required/>
     </p>
 
@@ -84,6 +85,16 @@
         required
       />
     </p>
+
+    <div class="roles">
+    <p>
+      <label for="role">Choose role:</label>
+      <select id="role" name="role" bind:value={role}>
+        <option value="1">Admin</option>
+        <option value="0">User</option>
+      </select>
+    </p>
+  </div>
     <input type="submit" id="submit" value="Register" />
   </form>
 
@@ -143,7 +154,23 @@ input[placeholder] {
 
   .register {
     position: absolute;
-    left: 43%;
-    top: 64%;
+    left: 44%;
+    top: 74%;
+  }
+
+  .roles{
+    position: relative;
+    left: 60%;
+  }
+  select {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
   }
 </style>
