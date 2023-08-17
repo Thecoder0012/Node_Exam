@@ -6,13 +6,26 @@ import transporter from "../mail/config.js";
 
 const router = Router();
 
+const isAdmin = (req, res, next) => {
+  if (req.session.user && req.session.user.role === 1) {
+    next();
+  } else {
+    res.status(403).send({ message: "Forbidden route! You are not authorized" });
+  }
+};
+
+router.get("/admin", isAdmin, (req, res) => {
+  res.status(200).send({message: "You are authorized!"})
+});
+
+
 router.post("/signup", async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, role } = req.body;
   try {
     const hashedPass = await bcrypt.hash(password.toString(), 12);
     const register = await db.query(
-      "INSERT INTO users (username, email,password) VALUES (?,?,?)",
-      [username, email, hashedPass]
+      "INSERT INTO users (username, email,password,role) VALUES (?,?,?,?)",
+      [username, email, hashedPass,role]
     );
 
     const mailInfo = transporter.sendMail({
@@ -29,19 +42,17 @@ router.post("/signup", async (req, res) => {
     });
     
   } catch (error) {
-       res.status(400).send({message: "This email has already been taken."});
+       res.status(400).send({message: "Please change username or email."});
   }
 });
 
-router.use((req, res, next) => {
-  console.log('Session:', req.session);
-  next();
-});
 
 router.get("/login", (req, res) => {
   const authenticated = !!req.session.user;
   res.status(200).send({ authenticated, user: req.session.user });
 });
+
+
 
 router.post("/login", async (req, res) => {
   try {
@@ -94,7 +105,7 @@ router.post("/contact",(req,res) => {
       from: process.env.NODEMAILER_USER,
       to: email,
       subject: name,
-      text: "Thanks for sending a message. We will respond look at your message asap!",
+      text: "Thanks for sending a message. We will look at your message as soon as possible!",
     }, (error, info) => {
       if (error) {
         console.error(error);

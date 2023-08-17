@@ -7,14 +7,14 @@ const router = Router();
 router.get("/products", async (req,res) => {
     const [products] = await db.query(
         "SELECT * from products");
-        res.send({products: products});
+        res.status(200).send({products: products});
       
 });
 
 router.get("/products/:id", async (req,res) => {
     const [product] = await db.query(
         "SELECT * from products where id = ?",[req.params.id]);
-        res.send({product: product});
+        res.status(200).send({product: product});
 });
 
 router.post("/products", async (req,res) => {
@@ -56,6 +56,4 @@ router.delete('/products/:id', async (req, res) => {
     }
   });
   
-
-
 export default router;
