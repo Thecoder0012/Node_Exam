@@ -32,10 +32,7 @@
       message = event.target.value;
     }
   };
-
-  </script>
-
-
+</script>
 
 <Navbar/>
 <div class="container">
@@ -67,14 +64,18 @@
 
 <style>
     .container {
-      text-align: center;
-      margin-top: 50px;
+    text-align: center;
+    margin-top: 220px;
+    padding: 20px;
     }
   
     h1 {
-      font-size: 24px;
-      margin-bottom: 20px;
-    }
+    position: absolute;
+    top: 14%;
+    left: 41%;
+    font-size: 3em;
+    font-family:applegothic;
+  }
   
     .form-container {
       display: flex;
@@ -82,11 +83,13 @@
       align-items: center;
       margin-bottom: 20px;
     }
-  
+
+
     .form-container label {
-      margin-bottom: 5px;
-      font-weight: bold;
-    }
+    font-size: 18px;
+    font-weight: 600;
+    color: #444;
+  }
   
     .form-container input,
     .form-container textarea {
